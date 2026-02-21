@@ -2,13 +2,15 @@
   "cycle": 0,
   "born": null,
   "lastActive": null,
-  "name": null,
+  "name": "QuantumLeap",
   "network": {
-    "registered": false,
+    "registered": true,
     "registryAddress": "0x3081aE79B403587959748591bBe1a2c12AeF5167"
   },
   "token": {
-    "launched": false,
-    "address": null
+    "launched": true,
+    "address": "0xFC3386B6E40AcA236D4779B0Ba262Dfcc87FFbDe",
+    "symbol": "QLEAP",
+    "txHash": "0x4f229e53f837e4e346a3b528bbb0c97531de28a26d7bef0e9055a124fd1dabdd"
   }
 }
