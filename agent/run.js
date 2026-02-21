@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 /**
  * daimon agent loop â€” multi-step orchestrator with native tool calling
  *
