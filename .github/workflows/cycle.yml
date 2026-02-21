@@ -1,4 +1,4 @@
-name: daimon cycle
+﻿name: daimon cycle
 
 on:
   schedule:
@@ -27,7 +27,7 @@ jobs:
           git config user.name "${{ github.repository_owner }}[bot]"
           git config user.email "${{ github.repository_owner }}[bot]@users.noreply.github.com"
 
-          # import GPG key if available (optional — skip signing if not set up)
+          # import GPG key if available (optional â€” skip signing if not set up)
           if [ -n "$GPG_PRIVATE_KEY" ]; then
             echo "$GPG_PRIVATE_KEY" | gpg --batch --import
             git config commit.gpgsign true
@@ -48,3 +48,4 @@ jobs:
           DAIMON_WALLET_KEY: ${{ secrets.DAIMON_WALLET_KEY }}
           BASE_RPC: ${{ secrets.BASE_RPC }}
         run: node agent/run.js
+
