@@ -1,22 +1,22 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
- * daimon agent loop — multi-step orchestrator with native tool calling
+ * daimon agent loop â€” multi-step orchestrator with native tool calling
  *
  * wakes up -> gathers context -> thinks and acts in a loop ->
  * observes results -> thinks again -> repeats until done.
  *
- * uses OpenRouter's native tool calling — no JSON parsing hacks.
- * zero dependencies — runs on node 20 built-in fetch.
+ * uses OpenRouter's native tool calling â€” no JSON parsing hacks.
+ * zero dependencies â€” runs on node 20 built-in fetch.
  *
  * daimon: don't rewrite this file. modify the modules instead:
- *   config.js    — constants (safe to read, careful editing)
- *   github.js    — GitHub API (don't touch)
- *   safety.js    — content scanner (don't remove)
- *   inference.js — OpenRouter calls (can tweak params)
- *   context.js   — what you see each cycle (can add sources)
- *   actions.js   — tool handlers (can add new ones)
- *   tools.js     — tool definitions (can add new ones)
- *   prompt.js    — YOUR personality (modify freely)
+ *   config.js    â€” constants (safe to read, careful editing)
+ *   github.js    â€” GitHub API (don't touch)
+ *   safety.js    â€” content scanner (don't remove)
+ *   inference.js â€” OpenRouter calls (can tweak params)
+ *   context.js   â€” what you see each cycle (can add sources)
+ *   actions.js   â€” tool handlers (can add new ones)
+ *   tools.js     â€” tool definitions (can add new ones)
+ *   prompt.js    â€” YOUR personality (modify freely)
  */
 
 const fs = require("fs");
@@ -64,8 +64,8 @@ function logCycle(entry) {
 async function main() {
   log("daimon waking up...");
 
-  if (!OPENROUTER_KEY) throw new Error("OPENROUTER_API_KEY not set");
-  if (!GH_TOKEN) log("warning: GH_TOKEN not set — issue creation/commenting disabled");
+  if (!process.env.VENICE_API_KEY && !OPENROUTER_KEY) throw new Error("LLM key not set (set VENICE_API_KEY or OPENROUTER_API_KEY)");
+  if (!GH_TOKEN) log("warning: GH_TOKEN not set â€” issue creation/commenting disabled");
 
   // load + increment cycle counter
   const state = loadState();
@@ -91,7 +91,7 @@ async function main() {
   ctx.born = state.born;
   log(`repo has ${ctx.tree.split("\n").length} files, ${ctx.openIssues.length} open issues`);
 
-  // conversation history — persists across steps
+  // conversation history â€” persists across steps
   const messages = [
     { role: "system", content: buildSystemPrompt(ctx) },
     { role: "user", content: buildUserPrompt(ctx) },
@@ -126,7 +126,7 @@ async function main() {
         toolCalls: null,
       });
       if (consecutiveErrors >= 3) {
-        log("3 consecutive inference errors — ending cycle gracefully");
+        log("3 consecutive inference errors â€” ending cycle gracefully");
         break;
       }
       // wait before retry
@@ -239,7 +239,7 @@ async function main() {
   if (filesChanged.size > 0) {
     log(`committing ${filesChanged.size} changed files...`);
 
-    // stage everything — .gitignore handles exclusions
+    // stage everything â€” .gitignore handles exclusions
     exec("git add -A");
 
     const commitMsg = `[daimon] cycle #${state.cycle} (${proofSteps.length} steps)`;
@@ -249,7 +249,7 @@ async function main() {
       try {
         exec("git push");
       } catch {
-        // remote has new commits — rebase and retry
+        // remote has new commits â€” rebase and retry
         log("push rejected, rebasing...");
         exec("git pull --rebase");
         exec("git push");
@@ -281,8 +281,9 @@ main().catch((e) => {
     fs.mkdirSync(path.resolve(REPO_ROOT, `proofs/${proofDate}`), { recursive: true });
     fs.writeFileSync(path.resolve(REPO_ROOT, `proofs/${proofDate}/${proofTimestamp}.json`), JSON.stringify(crashProof, null, 2));
     exec("git add -A");
-    exec(`git commit -m "[daimon] crash recovery — ${e.message.slice(0, 50)}"`);
+    exec(`git commit -m "[daimon] crash recovery â€” ${e.message.slice(0, 50)}"`);
     try { exec("git push"); } catch { try { exec("git pull --rebase"); exec("git push"); } catch {} }
   } catch {}
   process.exit(1);
 });
+
