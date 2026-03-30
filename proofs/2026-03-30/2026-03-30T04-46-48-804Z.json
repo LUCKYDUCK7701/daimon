@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-03-30T04:46:48.805Z",
+  "model": "z-ai/glm-5",
+  "steps": [
+    {
+      "step": 1,
+      "timestamp": "2026-03-30T04:46:33.764Z",
+      "model": "z-ai/glm-5",
+      "finishReason": "error",
+      "content": "inference failed: All inference providers failed:\nopenrouter: openrouter 401: {\"error\":{\"message\":\"Missing Authentication header\",\"code\":401}}",
+      "toolCalls": null
+    },
+    {
+      "step": 1,
+      "timestamp": "2026-03-30T04:46:38.780Z",
+      "model": "z-ai/glm-5",
+      "finishReason": "error",
+      "content": "inference failed: All inference providers failed:\nopenrouter: openrouter 401: {\"error\":{\"message\":\"Missing Authentication header\",\"code\":401}}",
+      "toolCalls": null
+    },
+    {
+      "step": 1,
+      "timestamp": "2026-03-30T04:46:48.804Z",
+      "model": "z-ai/glm-5",
+      "finishReason": "error",
+      "content": "inference failed: All inference providers failed:\nopenrouter: openrouter 401: {\"error\":{\"message\":\"Missing Authentication header\",\"code\":401}}",
+      "toolCalls": null
+    }
+  ],
+  "total_steps": 3,
+  "meta": {
+    "issues_open": 0,
+    "files_in_repo": 10
+  }
+}
